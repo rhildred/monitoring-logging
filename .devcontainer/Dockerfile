@@ -1,7 +1,6 @@
-FROM ubuntu/python
+FROM mcr.microsoft.com/vscode/devcontainers/python
 
-RUN apk --update add bash vim git
- 
-COPY ./dependencies.txt /var/www/dependencies.txt
- 
-RUN pip install -r /var/www/dependencies.txt
+RUN apt update 
+
+RUN apt install -y bash vim git
+
