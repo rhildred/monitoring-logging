@@ -60,3 +60,14 @@
       path: /usr/local/lib/python3.12/site-packages/pgadmin4/config_distro.py
       line: WTF_CSRF_SSL_STRICT = False
       create: yes  
+  - name: Download lcbo database
+    shell: "curl -o /tmp/lcboapi.tgz https://heycarsten.s3.amazonaws.com/lcboapi-2019-01-21.tgz && tar -zxvf /tmp/lcboapi.tgz --directory /tmp"
+  - name: Add some dummy data to our database
+    become: true
+    become_user: postgres
+    shell: psql {{ db_name }} < /tmp/lcboapi-2019-01-21.sql
+  - name: GRANT ALL PRIVILEGES ON DATABASE lcbo TO lcbo
+    become: true
+    become_user: postgres
+    shell: psql {{ db_name }} -c "GRANT pg_read_all_data TO lcbo"
+
