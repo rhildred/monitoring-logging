@@ -18,7 +18,6 @@
     - postgresql
     - postgresql-contrib
     - libpq-dev
-    - python3-psycopg2
   - name: Install psycopg2 python package
     ansible.builtin.pip:
       name: psycopg2
@@ -42,4 +41,22 @@
     become_user: postgres
     postgresql_user: name={{ db_user }}
          role_attr_flags=NOSUPERUSER,NOCREATEDB
-         state=present   
+         state=present
+  - name: Creates pgadmin directory
+    ansible.builtin.file:
+      path: /var/lib/pgadmin
+      state: directory
+      owner: vscode
+  - name: Creates pgadmin log directory
+    ansible.builtin.file:
+      path: /var/log/pgadmin
+      state: directory
+      owner: vscode
+  - name: Install pgadmin4 python package
+    ansible.builtin.pip:
+      name: pgadmin4
+  - name: Add a line to config.py
+    ansible.builtin.lineinfile:
+      path: /usr/local/lib/python3.12/site-packages/pgadmin4/config_distro.py
+      line: WTF_CSRF_SSL_STRICT = False
+      create: yes  
