@@ -12,6 +12,7 @@
     - openssl
     - libssl-dev
     - libssl-doc
+    - strace
   - name: Install PostgreSQL 
     apt: name={{ item }} update_cache=true state=present
     with_items:
