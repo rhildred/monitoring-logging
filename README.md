@@ -5,6 +5,7 @@ TLDR;
 
 ```
 sudo ansible-playbook postgres.yml
+pip install -r requirements.txt
 python -m flask run --host=0.0.0.0
 ```
 
