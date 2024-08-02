@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Test</title>
+    <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.21.0.css">
+</head>
+
+<body>
+    <div id="qunit"></div>
+    <div id="qunit-fixture"></div>
+    <script src="https://code.jquery.com/qunit/qunit-2.21.0.js"></script>
+    <script>
+        let ids = [17202, 17210, 17301, 17319, 17384, 17400, 17459, 17467, 17475, 17483, 17491, 17509];
+        var num = 5;
+
+        while (num > 0) {
+            ids = ids.concat(ids);
+            num--
+        }
+        QUnit.module('fetch', function () {
+            for (id of ids) {
+                QUnit.test(`fetch id ${id}`, function (assert) {
+                    const done = assert.async();
+                    const id = ids.shift();
+                    fetch(`/products/${id}`).then((result) => {
+                        if (result.status == 200) {
+                            assert.true(true);
+                        } else {
+                            assert.true(false);
+                        }
+                        done();
+                    });
+                });
+
+            }
+        });
+    </script>
+</body>
+
+</html>
